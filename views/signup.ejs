@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration </title>
+    <style>
+        form>div {
+          line-height: 1.5em;
+        }
+    
+        .err {
+          color: red;
+        }
+    
+      </style>
+</head>
+<%
+if (typeof err === 'undefined') err = {};
+if (typeof params === 'undefined') params = {};
+function showErr(eMsg) {
+    if (eMsg !== undefined) {
+        return `<span class="err">${eMsg}</span><br />`;
+    } else {
+        return '';
+    }
+}
+%>
+<body>
+    <form id="registrationForm" action="/signup" method="POST">
+
+        <div for="fullName">Full Name:
+        </div>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <div for="email"> Email Address:
+            <br />
+      <%- showErr(err.email) %>
+        </div>
+        <input type="email" id="email" name="email" required>
+
+        <div for="password">Password:
+            <br />
+      <%- showErr(err.password) %>
+        </div>
+        <input type="password" id="password" name="password" required>
+
+        <div for="reEnterPassword">Re-enter Password:
+            <br />
+      <%- showErr(err.reEnterPassword) %>
+        </div>
+        <input type="password" id="reEnterPassword" name="reEnterPassword" required>
+
+        <div>
+            <input type="submit" value="Register" />
+          </div>
+
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compose</title>
+    <style>
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1; 
+        }
+
+        .welcome {
+            margin-left: 20px;
+        }
+
+        .sign-out {
+            margin-right: 20px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .vertical-menu {
+            width: 100px;
+            background-color: #f8f8f8;
+            padding: 10px;
+            position: fixed;
+            left: 0;
+            top: 10;
+            height: 100%;
+            overflow-y: auto;
+            
+        }
+
+        .vertical-menu a {
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .vertical-menu a:hover {
+            background-color: #ddd;
+        }
+
+        #ComposeForm {
+            margin-left: 160px; 
+            padding: 20px;
+        }
+        .success {
+         color: rgb(11, 191, 86)
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="welcome">
+            <h1>Welcome, <%= username %>!</h1>
+        </div>
+        <a href="/signout" class="sign-out">Sign Out</a>
+    </header>
+
+    <div class="vertical-menu">
+        <a href="/composepage">Compose</a>
+        <a href="/inboxpage">Inbox</a>
+        <a href="/outboxpage">Outbox</a>
+    </div>
+
+    <form id="ComposeForm" action="/composepage" method="POST">
+        <label for="recipient">Recipient:</label>
+        <select id="recipient" name="recipient" required>
+            <% users.forEach(user => { %>
+                <option value="<%= user.email %>"><%= user.name %></option>
+            <% }); %>
+        </select>
+    
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" >
+    
+        <label for="body">Email Body:</label>
+        <textarea id="body" name="body" rows="4" ></textarea>
+    
+        <label for="attachment">Attachment :</label>
+        <input type="file" id="attachment" name="attachment">
+    
+        <div>
+            <input type="submit" value="Send " />
+        </div>
+    
+        <br />
+        <div class="success">
+            <%= typeof msg !=='undefined' ? msg : '' %>
+          </div>
+    </form>
+</body>
+
+</html>
+
+        
+    

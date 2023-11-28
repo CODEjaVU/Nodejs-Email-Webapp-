@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbox</title>
+    <style>
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1; 
+        }
+
+        .welcome {
+            margin-left: 20px;
+        }
+
+        .sign-out {
+            margin-right: 20px;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .vertical-menu {
+            width: 100px;
+            background-color: #f8f8f8;
+            padding: 10px;
+            position: fixed;
+            left: 0;
+            top: 10;
+            height: 100%;
+            overflow-y: auto;
+            
+        }
+
+        .vertical-menu a {
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .vertical-menu a:hover {
+            background-color: #ddd;
+        }
+
+        .content {
+            margin-left: 120px; 
+            padding: 20px;
+        }
+               
+        .pagination-container {
+            display: inline-block;
+            text-align: center; 
+        }
+
+        
+        .pagination-button {
+            color: black;
+            display: inline-block;
+            padding: 5px 13px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .pagination-button.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        
+        .pagination-button.prev-next {
+            color: black;
+            display: inline-block;
+            padding: 5px 13px;
+            text-decoration: none;
+            transition: background-color .3s;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .pagination-button.prev-next:hover {
+            background-color: #45a049;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="welcome">
+            <h1>Welcome, <%= username %>!</h1>
+        </div>
+        <a href="/signout" class="sign-out">Sign Out</a>
+    </header>
+
+    <div class="vertical-menu">
+        <a href="/composepage">Compose</a>
+        <a href="/inboxpage">Inbox</a>
+        <a href="/outboxpage">Outbox</a>
+    </div>
+
+    <div class="content">
+        <h1>Inbox</h1>
+        <% if (emails && emails.length > 0) { %>
+            <ul>
+                <% emails.forEach(email => { %>
+                    <li>
+                        <strong>From:</strong> <%= email.senderName %> |
+                        <% if (email.subject) { %>
+                            <strong>Subject:</strong> <a href="/detailpage/<%= email.id %>"><%= email.subject %></a> |
+                          <% } else { %>
+                            <strong>Subject:</strong> <a href="/detailpage/<%= email.id %>">(no-subject)</a> |
+                          <% } %>    
+                        <strong>Date:</strong> <%= email.date.toLocaleString() %>
+                    </li>
+                <% }); %>
+            </ul>
+        
+            <div class="pagination-container">
+                <% if (currentPage > 1) { %>
+                    <a href="?page=<%= currentPage - 1 %>" class="pagination-button prev-next">Previous</a>
+                <% } %>
+            
+                <% let startPage = Math.max(currentPage - 2, 1); %>
+                <% let endPage = Math.min(startPage + 4, totalPages); %>
+            
+                <% for (let i = startPage; i <= endPage; i++) { %>
+                    <a href="?page=<%= i %>" class="pagination-button <%= currentPage === i ? 'active' : '' %>"><%= i %></a>
+                <% } %>
+            
+                <% if (currentPage < totalPages) { %>
+                    <a href="?page=<%= currentPage + 1 %>" class="pagination-button prev-next">Next</a>
+                <% } %>
+            </div>                 
+        <% } else { %>
+            <p>No emails found.</p>
+        <% } %>
+        
+    </div>
+
+</body>
+
+</html>

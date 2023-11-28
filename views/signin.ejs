@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <style>
+        form>div {
+          line-height: 1.5em;
+        }
+    
+        .err {
+          color: red;
+        }
+
+    </style>
+</head>
+<%
+if (typeof err === 'undefined') err = {};
+if (typeof params === 'undefined') params = {};
+function showErr(eMsg) {
+    if (eMsg !== undefined) {
+        return `<span class="err">${eMsg}</span><br />`;
+    } else {
+        return '';
+    }
+}
+%>
+<body>
+    <form id="Login Form" action="/" method="POST">
+        <div for="fullName">Full Name:
+        </div>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <div for="password">Password:</div>
+        <input type="password" id="password" name="password" required>
+        <br />
+         <%- showErr(err.field) %>
+        <div>
+            <input type="submit" value="Login" />
+        </div>
+
+        <a href="/signup">No Account yet? Create one</a>
+    </form>
+
+</body>
+</html>
