@@ -1,0 +1,12 @@
+
+function countAppear(arr) {
+  return arr.reduce((cnt, num) => {
+    cnt[num] = (cnt[num] || 0) + 1;
+    return cnt;
+  }, {});
+}
+
+
+const arr = [10, 8, 6, 4, 6, 5, 8, 9, 6, 5 ];;
+const result = countAppear(arr);
+console.log(result);
